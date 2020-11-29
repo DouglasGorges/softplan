@@ -1,22 +1,32 @@
-Olá!
+EXERCÍCIO 2
 
-Eu ainda não havia tido, de um modo sólido, qualquer contato com testes. Os testes aplicados nesses desafios foram criados com base em conteúdo disponível na WEB.
-
-Sendo assim, ressalto alguns pontos de meu código:
-
-EXERCÍCIO 1
-
-	br.com.softplan.exercicioUm.util.GeradorObservacaoTest
-	
-		Optei por criar testes unitários para o código legado com intenção de aumentar a cobertura. Agora, o código possui 100% de cobertura por testes unitários.
+	Método main:
+		br.com.softplan.exercicio.dois.aplicacao.Aplicacao.main(String[])
 		
-		Observe que, para testar mais de uma via do fluxo de dados, eu crio um método com a anotação @Test e invoco a execução dos demais. Essa abordagem me incomoda porque é estranho, para mim, um método da classe de testes não contar com alguma anotação do jUnit. Procurei na WEB outra forma de fazê-lo mas não tive sucesso.
+	
+	br.com.softplan.exercicio.dois.util.JsonUtil
+		
+		Essa classe contém métodos úteis na manipulação do json. Decidi dividí-la em dois métodos: um que trata o recebimento de um json do arquivo e devolve-o em String, e outro que recebe essa String e devolve um array de objetos json.
+		Dessa forma, caso venhamos a consumir o json de outra fonte, basta criar um método que o transforme em String que, daí em diante, já estamos preparados para computá-lo.
 
-	br.com.softplan.exercicio.um.util.GeradorObservacao
+	br.com.softplan.exercicio.dois.helper.ComposicaoHelper
 
-		Eu extraí o controle do texto plural ou singular para um método com a intenção de reutilizar código;
-		Como o método legado recebe uma lista de inteiros, parametrizei o argumento da lista para o tipo Integer.
+		Essa classe é responsável por fazer o mapeamento inicial de atributos do json para uma entidade no java.
+		Como nossos atributos do json são compostos por outros (onde uma composição pode fazer parte de outra), precisei fazer o mapeamento espelhado das informações pra, só então, começar a manipular os modelos de objetos.
 
-		Criei uma classe de Nota Fiscal para implementar Orientação a Objeto na geração da observação.
+	br.com.softplan.exercicio.dois.entidade.Item
+	br.com.softplan.exercicio.dois.entidade.Insumo
+	br.com.softplan.exercicio.dois.entidade.Composicao
 
-		Eu não gostei da forma como ocorre o controle na montagem da String de retorno, pois temos código repetido. Pensei em extrair a nova funcionalidade para um novo método e aplicar abstração mas, como estamos tratando do mesmo assunto, que é gerar observação, optei por deixar na mesma classe.
+		Essas três classe são os mapeamentos das informações do json. Como uma composição e um Insumo são itens que podem ser atribuídos uns aos outros, ambos estendem a classe Item.
+
+	br.com.softplan.exercicio.dois.service.ComposicaoServiceImpl
+
+		Essa classe é responsável por executar os serviços na anipulação das entidades necessárias para a manipulação das composições.
+
+
+	Por fim, temos duas classes enum para mapeamento dos tipos de Item (Insumo, Composição) e de Unidades de Medida (Tempo, peso…).
+
+Sobre os testes, só consegui pensar em testar a instanciação das entidades de modelo, atribuindo valores e depois testando se os valores capturados serão os mesmos antes atribuídos.
+Esse exercício já foi bem mais difícil de visualizar a construção deles. Não gostei do jeito que ficou e sei que poderia ficar melhor, só não encontrei formas de fazê-lo.
+Não quis buscar ajuda com colegas que acredito terem a solução porque senti que estaria trapaceando, por isso me limitei aos conteúdos dispostos na WEB.
